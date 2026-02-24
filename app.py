@@ -13,13 +13,13 @@ import os
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "CHANGE_ME_TO_RANDOM_LONG_SECRET"
+app.config["SECRET_KEY"] = "4f9b8e7d6c5a3b2f1e0d9c8b7a6f5e4d3c2b1a0987654321ff8e7d6c5b4a3f"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=7)
 app.config["ADMIN_EMAIL"] = os.environ.get("ADMIN_EMAIL", "admin@shop.com")
 app.config["ADMIN_PASSWORD"] = os.environ.get("ADMIN_PASSWORD", "Admin12345!")
-app.config["SECRET_KEY"] = "4f9b8e7d6c5a3b2f1e0d9c8b7a6f5e4d3c2b1a0987654321ff8e7d6c5b4a3f"
+
 
 db = SQLAlchemy(app)
 
