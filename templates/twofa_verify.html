@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm" style="max-width:420px;">
+  <h3>2FA потвърждение</h3>
+  <p class="text-muted">Отвори Authenticator приложението и въведи 6-цифрения код.</p>
+  <form method="post">
+    <div class="mb-3">
+      <label class="form-label">Код</label>
+      <input class="form-control" name="code" inputmode="numeric" autocomplete="one-time-code" required>
+    </div>
+    <button class="btn btn-dark w-100">Потвърди</button>
+  </form>
+</div>
+{% endblock %}

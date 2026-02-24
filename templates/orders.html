@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h3>Моите поръчки</h3>
+
+  {% if not orders %}
+    <p class="text-muted">Нямаш поръчки.</p>
+    <a class="btn btn-dark" href="/products">Към продуктите</a>
+  {% else %}
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            <th>Общо</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+          <tr>
+            <td><a href="/orders/{{ o.id }}">#{{ o.id }}</a></td>
+            <td>{{ o.created_at }}</td>
+            <td>{% if o.status == "confirmed" %}
+    <span class="badge text-bg-success">Приета</span>
+  {% elif o.status == "shipping" %}
+    <span class="badge text-bg-warning">За изпращане</span>
+  {% elif o.status == "shipped" %}
+    <span class="badge text-bg-primary">Изпратена</span>
+  {% elif o.status == "cancelled" %}
+    <span class="badge text-bg-danger">Отказана</span>
+  {% else %}
+    <span class="badge text-bg-secondary">{{ o.status }}</span>
+  {% endif %}
+         </td>
+            <td><strong>{{ "%.2f"|format(o.total) }} €.</strong></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

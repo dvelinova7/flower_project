@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h3>Профил</h3>
+  <p class="mb-1"><strong>Имейл:</strong> {{ current_user.email }}</p>
+  <p class="mb-3"><strong>2FA:</strong>
+    {% if current_user.twofa_enabled %}
+      <span class="badge text-bg-success">Включена</span>
+    {% else %}
+      <span class="badge text-bg-secondary">Изключена</span>
+    {% endif %}
+  </p>
+
+  <div class="d-flex gap-2 flex-wrap">
+    <a class="btn btn-dark" href="/2fa/setup">Настрой 2FA</a>
+    <a class="btn btn-outline-dark" href="/products">Продукти</a>
+    <a class="btn btn-outline-danger" href="/logout">Logout</a>
+    <a class="btn btn-outline-dark" href="/orders">Моите поръчки</a>
+  </div>
+</div>
+{% endblock %}

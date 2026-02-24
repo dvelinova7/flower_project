@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h3>Количка</h3>
+
+  {% if not items %}
+    <p class="text-muted">Количката е празна.</p>
+    <a class="btn btn-dark" href="/products">Към продуктите</a>
+  {% else %}
+
+    <form method="post" action="/cart/update">
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Продукт</th>
+              <th style="width:120px;">Кол.</th>
+              <th>Ед. цена</th>
+              <th>Сума</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for it in items %}
+            <tr>
+              <td>
+                <div class="fw-semibold">{{ it.product.name }}</div>
+                <div class="text-muted small">{{ it.product.description }}</div>
+              </td>
+              <td>
+                <input class="form-control" type="number" min="0"
+                       name="qty_{{ it.product.id }}" value="{{ it.qty }}">
+                <div class="small text-muted">0 = махни</div>
+              </td>
+              <td>{{ "%.2f"|format(it.product.price) }} €.</td>
+              <td><strong>{{ "%.2f"|format(it.line_total) }} €.</strong></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <button class="btn btn-outline-dark">Обнови количка</button>
+          <a class="btn btn-link" href="/products">Още продукти</a>
+        </div>
+        <div class="fs-5">
+          Общо: <strong>{{ "%.2f"|format(total) }} €.</strong>
+        </div>
+
+        {% if total < 80 %}
+            <div class="text-muted small mt-2">
+                Добави още {{ "%.2f"|format(80 - total) }} € за безплатна доставка.
+             </div>
+        {% else %}
+            <div class="text-success fw-bold mt-2">
+                🎁 Получаваш безплатна доставка!
+            </div>
+        {% endif %}
+    <hr>
+      </div>
+    </form>
+
+    <hr>
+
+    {% if current_user.is_authenticated %}
+      <a class="btn btn-dark btn-lg w-100" href="/checkout">
+        Продължи към доставка
+      </a>
+    {% else %}
+      <div class="alert alert-warning mt-3">
+        За да направиш поръчка, трябва да влезеш в акаунта.
+        <a href="/login">Вход</a>
+      </div>
+    {% endif %}
+
+  {% endif %}
+</div>
+{% endblock %}

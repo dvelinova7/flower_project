@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm" style="max-width:520px;">
+  <h3>Настройка на 2FA</h3>
+  <ol>
+    <li>Инсталирай Google Authenticator / Microsoft Authenticator.</li>
+    <li>Сканирай QR кода.</li>
+    <li>Въведи текущия 6-цифрен код за потвърждение.</li>
+  </ol>
+
+  <div class="text-center my-3">
+    <img src="{{ qr_uri }}" alt="QR code" style="max-width:260px;">
+  </div>
+
+  <p class="text-muted">Ако не можеш да сканираш: secret = <code>{{ secret }}</code></p>
+
+  <form method="post">
+    <div class="mb-3">
+      <label class="form-label">Код</label>
+      <input class="form-control" name="code" inputmode="numeric" required>
+    </div>
+    <button class="btn btn-dark w-100">Активирай 2FA</button>
+  </form>
+</div>
+{% endblock %}

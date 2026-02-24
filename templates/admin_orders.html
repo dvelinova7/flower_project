@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h3>Admin: Поръчки</h3>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Потребител</th>
+          <th>Дата</th>
+          <th>Статус</th>
+          <th>Общо</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td><a href="/admin/orders/{{ o.id }}">#{{ o.id }}</a></td>
+          <td>{{ o.user.email }}</td>
+          <td>{{ o.created_at }}</td>
+          <td>{{ o.status }}</td>
+          <td><strong>{{ "%.2f"|format(o.total) }} €.</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
