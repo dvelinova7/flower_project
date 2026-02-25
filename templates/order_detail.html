@@ -11,17 +11,17 @@
 </p>
 
 <div class="mb-3">
-  {% if order.status == "confirmed" %}
-    <span class="badge text-bg-success">Приета</span>
-  {% elif order.status == "shipping" %}
-    <span class="badge text-bg-warning">За изпращане</span>
-  {% elif order.status == "shipped" %}
-    <span class="badge text-bg-primary">Изпратена</span>
-  {% elif order.status == "cancelled" %}
-    <span class="badge text-bg-danger">Отказана</span>
-  {% else %}
-    <span class="badge text-bg-secondary">{{ order.status }}</span>
-  {% endif %}
+  {% set badge_colors = {
+    "created": "secondary",
+    "confirmed": "success",
+    "shipping": "warning",
+    "shipped": "primary",
+    "cancelled": "danger"
+  } %}
+
+  <span class="badge text-bg-{{ badge_colors.get(order.status, 'secondary') }}">
+    {{ STATUS_LABELS.get(order.status, order.status) }}
+  </span>
 </div>
 
 <hr>
@@ -74,7 +74,10 @@
 <h5>История на статуси</h5>
 <ul class="mb-0">
   {% for h in order.status_history|sort(attribute="id") %}
-    <li>{{ h.created_at }} — {{ h.status }}</li>
+    <li>
+      {{ h.created_at }} —
+      {{ STATUS_LABELS.get(h.status, h.status) }}
+    </li>
   {% endfor %}
 </ul>
 </div>

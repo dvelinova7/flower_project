@@ -22,18 +22,19 @@
           <tr>
             <td><a href="/orders/{{ o.id }}">#{{ o.id }}</a></td>
             <td>{{ o.created_at }}</td>
-            <td>{% if o.status == "confirmed" %}
-    <span class="badge text-bg-success">Приета</span>
-  {% elif o.status == "shipping" %}
-    <span class="badge text-bg-warning">За изпращане</span>
-  {% elif o.status == "shipped" %}
-    <span class="badge text-bg-primary">Изпратена</span>
-  {% elif o.status == "cancelled" %}
-    <span class="badge text-bg-danger">Отказана</span>
-  {% else %}
-    <span class="badge text-bg-secondary">{{ o.status }}</span>
-  {% endif %}
-         </td>
+            <td>
+              {% set badge_colors = {
+                "created": "secondary",
+                "confirmed": "success",
+                "shipping": "warning",
+                "shipped": "primary",
+                "cancelled": "danger"
+              } %}
+
+              <span class="badge text-bg-{{ badge_colors.get(o.status, 'secondary') }}">
+                {{ STATUS_LABELS.get(o.status, o.status) }}
+              </span>
+            </td>
             <td><strong>{{ "%.2f"|format(o.total) }} €.</strong></td>
           </tr>
           {% endfor %}

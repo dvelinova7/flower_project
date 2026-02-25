@@ -20,7 +20,7 @@
           <td><a href="/admin/orders/{{ o.id }}">#{{ o.id }}</a></td>
           <td>{{ o.user.email }}</td>
           <td>{{ o.created_at }}</td>
-          <td>{{ o.status }}</td>
+          <td>{{ STATUS_LABELS.get(o.status, o.status) }}</td>
           <td><strong>{{ "%.2f"|format(o.total) }} €.</strong></td>
         </tr>
         {% endfor %}

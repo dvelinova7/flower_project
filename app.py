@@ -11,6 +11,13 @@ from functools import wraps
 from flask import abort
 import os
 
+STATUS_LABELS = {
+    "created": "Създадена",
+    "confirmed": "Потвърдена",
+    "shipping": "В доставка",
+    "shipped": "Изпратена",
+    "cancelled": "Отказана",
+}
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "4f9b8e7d6c5a3b2f1e0d9c8b7a6f5e4d3c2b1a0987654321ff8e7d6c5b4a3f"
@@ -149,6 +156,11 @@ def load_user(user_id):
         return db.session.get(User, int(user_id))
     except Exception:
         return None
+
+
+@app.context_processor
+def inject_status_labels():
+    return dict(STATUS_LABELS=STATUS_LABELS)
 
 @app.route("/")
 def index():

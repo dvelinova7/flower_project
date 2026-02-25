@@ -11,7 +11,7 @@
   </p>
 
   <div class="mb-3">
-    <strong>Статус:</strong> {{ order.status }}
+    <strong>Статус:</strong> {{ STATUS_LABELS.get(order.status, order.status) }}
   </div>
 
   <div class="table-responsive">
@@ -51,11 +51,11 @@
 
 <form method="post" action="/admin/orders/{{ order.id }}/status" class="d-flex gap-2 flex-wrap">
   <select class="form-select" name="status" style="max-width:280px;">
-    <option value="created"   {% if order.status == "created" %}selected{% endif %}>created (създадена)</option>
-    <option value="confirmed" {% if order.status == "confirmed" %}selected{% endif %}>confirmed (приета)</option>
-    <option value="shipping"  {% if order.status == "shipping" %}selected{% endif %}>shipping (за изпращане)</option>
-    <option value="shipped"   {% if order.status == "shipped" %}selected{% endif %}>shipped (изпратена)</option>
-    <option value="cancelled" {% if order.status == "cancelled" %}selected{% endif %}>cancelled (отказана)</option>
+    {% for key, label in STATUS_LABELS.items() %}
+     <option value="{{ key }}" {% if order.status == key %}selected{% endif %}>
+        {{ label }}
+     </option>
+    {% endfor %}
   </select>
 
   <button class="btn btn-dark">Запази</button>
